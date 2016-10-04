@@ -2,33 +2,13 @@ require 'active_record'
 require_relative 'connection'
 
 # models
-require_relative '../models/artist'
-require_relative '../models/song'
+require_relative '../models/instructor'
+require_relative '../models/student'
 
-# data
-require_relative './song_data'
-require_relative './artist_data'
+jesse = Instructor.create(first_name: "Jesse", last_name: "Shawl", age: 99)
+adrian = Instructor.create(first_name: "Adrian", last_name: "Maseda", age: 100)
+nick = Instructor.create(first_name: "Nick", last_name: "Olds", age: 101)
 
-Song.destroy_all
-Artist.destroy_all
-
-song_data = get_song_data()
-artist_data = get_artist_data()
-
-song_data.each_pair do |artist_name, songs|
-  info = artist_data[artist_name]
-  current_artist = Artist.create!({
-    name:         info[:name],
-    photo_url:    info[:photo_url],
-    nationality:  info[:nationality]
-  })
-
-  songs.each do |song|
-    Song.create!({
-      title:        song[:title],
-      album:        song[:album],
-      preview_url:  song[:preview_link],
-      artist:       current_artist
-    })
-  end
-end
+jesse.students.create(first_name: "Paul", last_name: "Paulson")
+adrian.students.create(first_name: "Bob", last_name: "Bobson")
+nick.students.create(first_name: "Dwayne", last_name: "The Rock Johnson")
