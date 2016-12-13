@@ -2,13 +2,28 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'active_record'
 
+require_relative 'models/artist'
+require_relative 'models/song'
+require_relative 'db/connection'
+
 # Load the file to connect to the DB
 
 # Load specific routes / controllers
+get '/artists' do
+  @artist = Artist.all
+  erb :'artists/index'
+end
 
-# Load models
+get "/artists/new" do
+  erb :"artists/new"
+end
 
+get '/artists/:id' do
+  @artist = Artist.find(params[:id])
+  erb :'artists/show'
+end
 
-####################
-#  General routes  #
-####################
+post '/artists' do
+  @artist = Artist.create(params[:artist])
+  redirect "/artists/#{@artist.id}"
+end
