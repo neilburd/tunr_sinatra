@@ -44,3 +44,14 @@ delete "/artists/:id" do
   @artist.destroy
   redirect "/artists"
 end
+
+get '/songs' do
+  @song = Song.all
+  erb :'/songs/index'
+end
+
+get '/songs/:id' do
+  @song = Song.find(params[:id])
+  @artist = Artist.find( @song.artist_id )
+  erb :'/songs/show'
+end
